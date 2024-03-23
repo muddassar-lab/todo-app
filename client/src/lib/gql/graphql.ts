@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -71,8 +72,10 @@ export type Mutation = {
   delete_todo?: Maybe<Todo>;
   /** Entry point for user login functionality. */
   login?: Maybe<LoginResponse>;
+  /** Entry point for user logout functionality. */
+  logout?: Maybe<LogoutResponse>;
   /** Entry point for user registration functionality. */
-  register?: Maybe<Scalars['String']['output']>;
+  register?: Maybe<RegisterResponse>;
   /** Updates an existing todo item. */
   update_todo?: Maybe<Todo>;
 };
@@ -133,6 +136,13 @@ export type LoginResponse = {
   access_token?: Maybe<Scalars['String']['output']>;
 };
 
+/** Response object for user logout operation. */
+export type LogoutResponse = {
+  __typename?: 'LogoutResponse';
+  /** Message indicating the status or outcome of the logout operation. */
+  message?: Maybe<Scalars['String']['output']>;
+};
+
 /** Input object for user login credentials. */
 export type RegisterInput = {
   /** Email address used for registration. */
@@ -141,6 +151,13 @@ export type RegisterInput = {
   password?: InputMaybe<Scalars['String']['input']>;
   /** Username used for registration. */
   username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Response object for user registration operation. */
+export type RegisterResponse = {
+  __typename?: 'RegisterResponse';
+  /** Message indicating the status or outcome of the registration operation. */
+  message?: Maybe<Scalars['String']['output']>;
 };
 
 /** Input object for updating an existing todo item. */
@@ -191,13 +208,6 @@ export enum OrderByRelationWithColumnAggregateFunction {
   Sum = 'SUM'
 }
 
-/** Response object for user registration operation. */
-export type RegisterResponse = {
-  __typename?: 'RegisterResponse';
-  /** Message indicating the status or outcome of the registration operation. */
-  message?: Maybe<Scalars['String']['output']>;
-};
-
 /** Specify if you want to include or exclude trashed results from a query. */
 export enum Trashed {
   /** Only return trashed results. */
@@ -207,3 +217,51 @@ export enum Trashed {
   /** Only return non-trashed results. */
   Without = 'WITHOUT'
 }
+
+export type LoginMutationVariables = Exact<{
+  input?: InputMaybe<LoginInput>;
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'LoginResponse', access_token?: string | null } | null };
+
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutMutation = { __typename?: 'Mutation', logout?: { __typename?: 'LogoutResponse', message?: string | null } | null };
+
+export type RegisterMutationVariables = Exact<{
+  input?: InputMaybe<RegisterInput>;
+}>;
+
+
+export type RegisterMutation = { __typename?: 'Mutation', register?: { __typename?: 'RegisterResponse', message?: string | null } | null };
+
+export type CreateTodoMutationVariables = Exact<{
+  input?: InputMaybe<CreateTodoInput>;
+}>;
+
+
+export type CreateTodoMutation = { __typename?: 'Mutation', create_todo?: { __typename?: 'Todo', id: string } | null };
+
+export type DeleteTodoMutationVariables = Exact<{
+  input?: InputMaybe<DeleteTodoInput>;
+}>;
+
+
+export type DeleteTodoMutation = { __typename?: 'Mutation', delete_todo?: { __typename?: 'Todo', id: string } | null };
+
+export type UpdateTodoMutationVariables = Exact<{
+  input?: InputMaybe<UpdateTodoInput>;
+}>;
+
+
+export type UpdateTodoMutation = { __typename?: 'Mutation', update_todo?: { __typename?: 'Todo', id: string } | null };
+
+
+export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"access_token"}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
+export const LogoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<LogoutMutation, LogoutMutationVariables>;
+export const RegisterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Register"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RegisterInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"register"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<RegisterMutation, RegisterMutationVariables>;
+export const CreateTodoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateTodo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateTodoInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"create_todo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateTodoMutation, CreateTodoMutationVariables>;
+export const DeleteTodoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteTodo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"DeleteTodoInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_todo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteTodoMutation, DeleteTodoMutationVariables>;
+export const UpdateTodoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateTodo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateTodoInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_todo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateTodoMutation, UpdateTodoMutationVariables>;

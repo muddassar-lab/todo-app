@@ -1,0 +1,5 @@
+mutation CreateTodo($input: CreateTodoInput) {
+    create_todo(input: $input) {
+        id
+    }
+}

@@ -1,0 +1,5 @@
+mutation UpdateTodo($input: UpdateTodoInput) {
+    update_todo(input: $input) {
+        id
+    }
+}

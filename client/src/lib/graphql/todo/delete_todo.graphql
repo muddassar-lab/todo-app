@@ -1,0 +1,5 @@
+mutation DeleteTodo($input: DeleteTodoInput) {
+    delete_todo(input: $input) {
+        id
+    }
+}

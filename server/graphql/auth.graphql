@@ -18,6 +18,16 @@ type RegisterResponse {
     message: String
 }
 
+"""
+Response object for user logout operation.
+"""
+type LogoutResponse {
+    """
+    Message indicating the status or outcome of the logout operation.
+    """
+    message: String
+}
+
 
 """
 Input object for user login credentials.
@@ -79,7 +89,12 @@ type Mutation {
         Input containing registration data.
         """
         input: RegisterInput @spread
-    ): String
+    ): RegisterResponse
+
+    """
+    Entry point for user logout functionality.
+    """
+    logout: LogoutResponse @guard
 }
 
 """
