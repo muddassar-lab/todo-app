@@ -1,0 +1,94 @@
+"""
+Response object for user login operation.
+"""
+type LoginResponse {
+    """
+    Access token for the authenticated user session.
+    """
+    access_token: String
+}
+
+"""
+Response object for user registration operation.
+"""
+type RegisterResponse {
+    """
+    Message indicating the status or outcome of the registration operation.
+    """
+    message: String
+}
+
+
+"""
+Input object for user login credentials.
+"""
+input LoginInput {
+    """
+    Device name from which the login is initiated.
+    """
+    device_name: String @rules(apply: ["required", "string"])
+
+    """
+    Email address used for login.
+    """
+    email: String @rules(apply: ["required", "string"])
+
+    """
+    Password associated with the email for login.
+    """
+    password: String @rules(apply: ["required", "string"])
+}
+
+
+"""
+Input object for user login credentials.
+"""
+input RegisterInput {
+    """
+    Username used for registration.
+    """
+    username: String @rules(apply: ["required", "string"])
+
+    """
+    Email address used for registration.
+    """
+    email: String @rules(apply: ["required", "string"])
+
+    """
+    Password associated with the email for registration.
+    """
+    password: String @rules(apply: ["required", "string", "confirmed", "min:8"])
+}
+
+type Mutation {
+    """
+    Entry point for user login functionality.
+    """
+    login(
+        """
+        Input containing login credentials.
+        """
+        input: LoginInput @spread
+    ): LoginResponse
+
+    """
+    Entry point for user registration functionality.
+    """
+    register(
+        """
+        Input containing registration data.
+        """
+        input: RegisterInput @spread
+    ): String
+}
+
+"""
+Root query type containing operations for retrieving data.
+"""
+type Query {
+    """
+    Retrieve the authenticated user.
+    """
+    get_authenticated_user: User @auth @guard
+}
+

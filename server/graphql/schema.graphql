@@ -1,0 +1,6 @@
+#import auth.graphql
+#import todo.graphql
+#import user.graphql
+
+scalar DateTimeUtc
+@scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTimeUtc")

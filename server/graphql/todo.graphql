@@ -1,0 +1,118 @@
+"""
+Represents a task or todo item.
+"""
+type Todo {
+    """
+    id of the todo item.
+    """
+    id: ID!
+
+    """
+    Title of the todo item.
+    """
+    title: String!
+
+    """
+    Description of the todo item.
+    """
+    description: String
+
+    """
+    Indicates whether the todo item is completed or not.
+    """
+    is_completed: Boolean!
+
+    """
+    ID of the user associated with the todo item.
+    """
+    user_id: String!
+
+    """
+    The user who owns this todo item.
+    """
+    user: User @belongsTo
+
+    """
+    Timestamp indicating when the todo item was created (in UTC).
+    """
+    created_at: DateTimeUtc!
+
+    """
+    Timestamp indicating when the todo item was last updated (in UTC).
+    """
+    updated_at: DateTimeUtc!
+}
+
+"""
+Input object for creating a new todo item.
+"""
+input CreateTodoInput {
+    """
+    Title of the todo item (required, maximum 255 characters).
+    """
+    title: String! @rules(apply: ["required", "string", "max:255"])
+
+    """
+    Description of the todo item (optional).
+    """
+    description: String @rules(apply: ["required", "string"])
+}
+
+"""
+Input object for updating an existing todo item.
+"""
+input UpdateTodoInput {
+    """
+    ID of the todo item to be updated (required, must be a valid UUID, and must exist in the database).
+    """
+    id: ID! @rules(apply: ["required", "string", "uuid"])
+
+    """
+    New title of the todo item (required, maximum 255 characters).
+    """
+    title: String! @rules(apply: ["required", "string", "max:255"])
+
+    """
+    New description of the todo item (optional).
+    """
+    description: String @rules(apply: ["required", "string"])
+
+    """
+    New completion status of the todo item (required).
+    """
+    is_completed: Boolean! @rules(apply: ["required", "boolean"])
+}
+
+"""
+Input object for deleting a todo item.
+"""
+input DeleteTodoInput {
+    """
+    ID of the todo item to be deleted (required, must be a valid UUID, and must exist in the database).
+    """
+    id: ID! @rules(apply: ["required", "string", "uuid"])
+}
+
+extend type Query {
+    """
+    Retrieves todos associated with the authenticated user.
+    """
+    get_authenticated_user_todos: [Todo!] @guard @all @whereAuth(relation: "user")
+}
+
+extend type Mutation {
+    """
+    Creates a new todo item.
+    """
+    create_todo(input: CreateTodoInput @spread): Todo @guard
+
+    """
+    Updates an existing todo item.
+    """
+    update_todo(input: UpdateTodoInput @spread): Todo @guard
+
+    """
+    Deletes a todo item.
+    """
+    delete_todo(input: DeleteTodoInput @spread): Todo @guard
+}
