@@ -1,0 +1,9 @@
+query GetAuthenticatedUser {
+    get_authenticated_user {
+        created_at
+        id
+        email
+        updated_at
+        username
+    }
+}

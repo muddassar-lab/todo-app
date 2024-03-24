@@ -18,7 +18,9 @@ const documents = {
     "mutation Register($input: RegisterInput) {\n  register(input: $input) {\n    message\n  }\n}": types.RegisterDocument,
     "mutation CreateTodo($input: CreateTodoInput) {\n  create_todo(input: $input) {\n    id\n  }\n}": types.CreateTodoDocument,
     "mutation DeleteTodo($input: DeleteTodoInput) {\n  delete_todo(input: $input) {\n    id\n  }\n}": types.DeleteTodoDocument,
+    "query GetAuthenticatedUserTodos($first: Int!, $page: Int) {\n  get_authenticated_user_todos(first: $first, page: $page) {\n    paginatorInfo {\n      count\n      currentPage\n      firstItem\n      hasMorePages\n      lastItem\n      lastPage\n      perPage\n      total\n    }\n    data {\n      id\n      title\n      description\n      is_completed\n      created_at\n      updated_at\n    }\n  }\n}": types.GetAuthenticatedUserTodosDocument,
     "mutation UpdateTodo($input: UpdateTodoInput) {\n  update_todo(input: $input) {\n    id\n  }\n}": types.UpdateTodoDocument,
+    "query GetAuthenticatedUser {\n  get_authenticated_user {\n    created_at\n    id\n    email\n    updated_at\n    username\n  }\n}": types.GetAuthenticatedUserDocument,
 };
 
 /**
@@ -58,7 +60,15 @@ export function graphql(source: "mutation DeleteTodo($input: DeleteTodoInput) {\
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "query GetAuthenticatedUserTodos($first: Int!, $page: Int) {\n  get_authenticated_user_todos(first: $first, page: $page) {\n    paginatorInfo {\n      count\n      currentPage\n      firstItem\n      hasMorePages\n      lastItem\n      lastPage\n      perPage\n      total\n    }\n    data {\n      id\n      title\n      description\n      is_completed\n      created_at\n      updated_at\n    }\n  }\n}"): (typeof documents)["query GetAuthenticatedUserTodos($first: Int!, $page: Int) {\n  get_authenticated_user_todos(first: $first, page: $page) {\n    paginatorInfo {\n      count\n      currentPage\n      firstItem\n      hasMorePages\n      lastItem\n      lastPage\n      perPage\n      total\n    }\n    data {\n      id\n      title\n      description\n      is_completed\n      created_at\n      updated_at\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "mutation UpdateTodo($input: UpdateTodoInput) {\n  update_todo(input: $input) {\n    id\n  }\n}"): (typeof documents)["mutation UpdateTodo($input: UpdateTodoInput) {\n  update_todo(input: $input) {\n    id\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query GetAuthenticatedUser {\n  get_authenticated_user {\n    created_at\n    id\n    email\n    updated_at\n    username\n  }\n}"): (typeof documents)["query GetAuthenticatedUser {\n  get_authenticated_user {\n    created_at\n    id\n    email\n    updated_at\n    username\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

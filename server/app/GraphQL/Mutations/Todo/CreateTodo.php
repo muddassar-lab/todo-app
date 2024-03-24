@@ -29,7 +29,7 @@ final readonly class CreateTodo
             // create the model and return it
             return Todo::create($arguments->toArray());
         } catch (Exception $exception) {
-            throw new Error('Some error occurred. Please try again later.');
+            throw new Error($exception->getMessage());
         }
     }
 }

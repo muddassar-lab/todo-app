@@ -11,7 +11,7 @@ final readonly class Logout
     public function __invoke(null $_, array $args): array
     {
         // logout the currently authenticated user
-        auth()->logout();
+        auth()->user()->currentAccessToken()->delete();
 
         // return the response message
         return [

@@ -21,11 +21,17 @@ final readonly class Register
             $arguments = collect($args)->only('email', 'password', 'username');
 
             // check if the user with this email already exists
-            $user_already_exists = User::whereEmail($arguments['email'])->exists();
+            $email_already_exists = User::whereEmail($arguments['email'])->exists();
+            $username_already_exists = User::whereUsername($arguments['username'])->exists();
 
-            // if the user exists, throw an error
-            if (isset($user_already_exists)) {
+            // if the user with this email exists, throw an error
+            if ($email_already_exists) {
                 throw new Error("User with this email already exists in our system.");
+            }
+
+            // if the user with this username exists, throw an error
+            if ($username_already_exists) {
+                throw new Error("User with this username already exists in our system.");
             }
 
             // create the new user
@@ -36,7 +42,7 @@ final readonly class Register
                 'message' => "User created successfully."
             ];
         } catch (Exception $exception) {
-            throw new Error('Some error occurred. Please try again later.');
+            throw new Error($exception->getMessage());
         }
     }
 }

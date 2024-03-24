@@ -41,7 +41,7 @@ final readonly class UpdateTodo
             // return the todo
             return $todo;
         } catch (Exception $exception) {
-            throw new Error('Some error occurred. Please try again later.');
+            throw new Error($exception->getMessage());
         }
     }
 }

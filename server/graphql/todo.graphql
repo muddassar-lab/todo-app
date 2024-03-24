@@ -97,7 +97,7 @@ extend type Query {
     """
     Retrieves todos associated with the authenticated user.
     """
-    get_authenticated_user_todos: [Todo!] @guard @all @whereAuth(relation: "user")
+    get_authenticated_user_todos: [Todo!]! @guard @paginate @whereAuth(relation: "user")
 }
 
 extend type Mutation {

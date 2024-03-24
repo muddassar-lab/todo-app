@@ -19,7 +19,7 @@ final readonly class Login
     {
         try {
             // collect the arguments
-            $arguments = collect($args)->only('email', 'password', 'device_name');
+            $arguments = collect($args)->only('email', 'password');
 
             // find the user
             $user = User::whereEmail($arguments['email'])->first();
@@ -30,14 +30,14 @@ final readonly class Login
             }
 
             // generate the token
-            $token = $user->createToken($arguments['device_name'])->plainTextToken;
+            $token = $user->createToken('token')->plainTextToken;
 
             // return the response
             return [
                 'access_token' => $token,
             ];
         } catch (Exception $exception) {
-            throw new Error('Some error occurred. Please try again later.');
+            throw new Error($exception->getMessage());
         }
     }
 }

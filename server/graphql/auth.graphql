@@ -34,11 +34,6 @@ Input object for user login credentials.
 """
 input LoginInput {
     """
-    Device name from which the login is initiated.
-    """
-    device_name: String @rules(apply: ["required", "string"])
-
-    """
     Email address used for login.
     """
     email: String @rules(apply: ["required", "string"])
@@ -67,7 +62,7 @@ input RegisterInput {
     """
     Password associated with the email for registration.
     """
-    password: String @rules(apply: ["required", "string", "confirmed", "min:8"])
+    password: String @rules(apply: ["required", "string", "min:8"])
 }
 
 type Mutation {

@@ -1,0 +1,22 @@
+query GetAuthenticatedUserTodos($first: Int!, $page: Int) {
+    get_authenticated_user_todos(first: $first, page: $page) {
+        paginatorInfo {
+            count
+            currentPage
+            firstItem
+            hasMorePages
+            lastItem
+            lastPage
+            perPage
+            total
+        }
+        data {
+            id
+            title
+            description
+            is_completed
+            created_at
+            updated_at
+        }
+    }
+}
